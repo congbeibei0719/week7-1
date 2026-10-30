@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beibei Cong — Contact Me</title>
+  <meta name="description" content="Get in touch with Beibei Cong." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===== Navbar ===== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-dot">B</span>
+        Beibei Cong
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="resume.html">Resume</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html" class="active nav-cta">Contact Me</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Page header ===== -->
+    <section class="page-header">
+      <div class="container">
+        <span class="section-eyebrow">Say hello</span>
+        <h1>Contact Me</h1>
+        <p>Whether it's a project idea, a question, or just to chat about coffee and code — I'd love to hear from you.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Contact details -->
+          <div class="card reveal">
+            <h2 class="section-title" style="font-size:1.5rem; margin-bottom:20px;">Reach me here</h2>
+            <ul class="contact-list">
+              <li>
+                <span class="contact-icon">✉️</span>
+                <div>
+                  <div class="label">Email</div>
+                  <div class="value">Beibei.Cong26@student.xjtlu.edu.cn</div>
+                </div>
+              </li>
+              <li>
+                <span class="contact-icon">🐙</span>
+                <div>
+                  <div class="label">GitHub</div>
+                  <div class="value">@beibeicong</div>
+                </div>
+              </li>
+              <li>
+                <span class="contact-icon">💼</span>
+                <div>
+                  <div class="label">LinkedIn</div>
+                  <div class="value">/in/beibeicong</div>
+                </div>
+              </li>
+              <li>
+                <span class="contact-icon">📍</span>
+                <div>
+                  <div class="label">Location</div>
+                  <div class="value">Jiangsu, China</div>
+                </div>
+              </li>
+            </ul>
+            <p style="margin-top:22px; color:var(--ink-soft); font-size:0.95rem;">
+              I usually reply within a day or two. Mornings (with coffee ☕) are the best time to reach me.
+            </p>
+          </div>
+
+          <!-- Contact form -->
+          <div class="card reveal">
+            <h2 class="section-title" style="font-size:1.5rem; margin-bottom:20px;">Send a message</h2>
+            <form id="contact-form" novalidate>
+              <div class="form-field">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" placeholder="e.g. Jamie Chen" required />
+              </div>
+              <div class="form-field">
+                <label for="email">Your email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required />
+              </div>
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell me what's on your mind…" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Send message ✉️</button>
+              <p class="form-note">Fields marked are just for show — this is a friendly demo form.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="funfact">
+          <div class="label">Fun fact about me</div>
+          <div class="text">
+            I reply to emails like I write letters — with a "hello", a real question, and a warm sign-off. 💌
+          </div>
+        </div>
+        <nav class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="resume.html">Resume</a>
+          <a href="projects.html">Projects</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        © <span id="year"></span> Beibei Cong · Made with warmth &amp; coffee.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js?v=2"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

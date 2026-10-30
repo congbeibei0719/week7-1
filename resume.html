@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beibei Cong — Resume</title>
+  <meta name="description" content="The resume of Beibei Cong — experience, education, and skills." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Resume page — bullet list inside timeline entries */
+    .resume-bullets { list-style: disc; margin: 8px 0 0; padding-left: 22px; color: var(--ink-soft); }
+    .resume-bullets li { margin-bottom: 6px; line-height: 1.6; }
+    .resume-bullets li:last-child { margin-bottom: 0; }
+    /* Skills groups */
+    .skills-group + .skills-group { margin-top: 18px; }
+    .skills-group-title {
+      font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.85rem;
+      letter-spacing: 0.04em; color: var(--ink); margin: 0 0 10px;
+    }
+    /* Resume identity header (photo + name) */
+    .resume-identity .container { display: flex; flex-direction: column; align-items: center; }
+    .resume-photo {
+      width: 120px; height: 120px; border-radius: 50%;
+      object-fit: cover; object-position: center 20%;
+      border: 4px solid #fff; box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+    }
+    .resume-name { font-size: clamp(2rem, 4.5vw, 2.8rem); font-weight: 800; margin-bottom: 0; }
+
+    /* ===== Print: clean compact resume PDF (nav / footer / buttons hidden) ===== */
+    @media print {
+      @page { size: A4; margin: 1cm; }
+      body {
+        line-height: 1.4;
+        background-color: var(--cream);
+        background-image:
+          radial-gradient(circle at 8% 0%, rgba(247, 201, 159, 0.22), transparent 38%),
+          radial-gradient(circle at 95% 12%, rgba(244, 166, 197, 0.18), transparent 42%),
+          radial-gradient(circle at 50% 100%, rgba(111, 168, 232, 0.14), transparent 45%);
+        background-attachment: scroll;
+      }
+      .nav, .footer, .resume-actions { display: none !important; }
+
+      /* Identity header */
+      .page-header { padding: 0 0 10px; }
+      .resume-photo { width: 72px; height: 72px; margin-bottom: 6px; border-width: 3px; }
+      .resume-name { font-size: 1.6rem !important; }
+
+      /* Stack & cards */
+      .section { padding: 0 !important; }
+      .resume-sections { gap: 12px !important; }
+      .card { box-shadow: none; padding: 12px 16px; break-inside: avoid; }
+      .card .section-title { font-size: 1.12rem !important; margin-bottom: 8px !important; }
+
+      /* Summary text */
+      .card p { line-height: 1.45; }
+      .resume-summary { font-size: 0.95rem !important; line-height: 1.45 !important; }
+
+      /* Timeline */
+      .timeline { padding-left: 22px; }
+      .timeline-item { margin-bottom: 10px; break-inside: avoid; }
+      .timeline-item:last-child { margin-bottom: 0; }
+      .timeline-item h3 { font-size: 1rem; margin-bottom: 2px; }
+      .timeline-item p[style] { margin-bottom: 4px !important; }
+      .timeline-meta { gap: 6px; margin-bottom: 4px; font-size: 0.76rem; }
+      .timeline-meta .tag { padding: 1px 9px; }
+      .resume-bullets { margin-top: 4px; padding-left: 18px; }
+      .resume-bullets li { margin-bottom: 2px; line-height: 1.4; }
+
+      /* Skills */
+      .skills-group + .skills-group { margin-top: 8px; }
+      .skills-group-title { font-size: 0.78rem; margin-bottom: 5px; }
+      .skills-wrap { gap: 6px; }
+      .chip { font-size: 0.78rem; padding: 3px 11px; }
+
+      .reveal { opacity: 1 !important; transform: none !important; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Navbar ===== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-dot">B</span>
+        Beibei Cong
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="resume.html" class="active">Resume</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html" class="nav-cta">Contact Me</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Identity header (photo + name) ===== -->
+    <section class="page-header resume-identity">
+      <div class="container">
+        <img class="resume-photo" src="assets/profile.jpg" alt="Portrait of Beibei Cong" />
+        <h1 class="resume-name">Beibei Cong</h1>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="resume-sections" style="display:flex; flex-direction:column; gap:26px;">
+
+          <!-- ===== Summary ===== -->
+          <div class="card reveal">
+            <h2 class="section-title" style="font-size:1.5rem; margin-bottom:16px;">✨ Summary</h2>
+            <p class="resume-summary" style="font-size:1.05rem; color:var(--ink-soft); line-height:1.8;">
+              I am a Digital Education postgraduate at Xi'an Jiaotong-Liverpool University with a bachelor's background in Translation. Drawing on internship experience in professional translation and English teaching assistance, I have solid bilingual translation, proofreading and communication skills. Trained in audience-centred translation theories, I combine language strengths with digital-education perspectives and seek opportunities in education-related roles.
+            </p>
+          </div>
+
+          <!-- ===== Experience ===== -->
+          <div class="card reveal">
+            <h2 class="section-title" style="font-size:1.5rem; margin-bottom:24px;">💼 Experience</h2>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-meta">
+                  <span class="tag">08/2022 — 11/2022</span>
+                </div>
+                <h3>Translation Intern</h3>
+                <p style="font-weight:600; color:var(--coral-dark); margin-bottom:10px;">Harbin Yutang Translation Service Co., Ltd.</p>
+                <ul class="resume-bullets">
+                  <li>Designed and updated industry-specific terminology database entries to boost team translation efficiency.</li>
+                  <li>Conducted bilingual translation and cross-check proofreading for business contracts, product manuals and cultural materials; identified and fixed linguistic errors to improve translation quality.</li>
+                  <li>Communicated with clients to confirm translation requirements and ensured deliverables aligned with client expectations.</li>
+                </ul>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-meta">
+                  <span class="tag">07/2021 — 09/2021</span>
+                </div>
+                <h3>English Teaching Assistant</h3>
+                <p style="font-weight:600; color:var(--coral-dark); margin-bottom:10px;">New Oriental Education &amp; Technology Group</p>
+                <ul class="resume-bullets">
+                  <li>Designed class exercises and test materials to support daily teaching delivery.</li>
+                  <li>Conducted student performance tracking, offered learning feedback and assisted in building personalised study plans.</li>
+                  <li>Supported in-class management, answered students' after-class questions and communicated learning progress to parents.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== Education ===== -->
+          <div class="card reveal">
+            <h2 class="section-title" style="font-size:1.5rem; margin-bottom:24px;">🎓 Education</h2>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-meta">
+                  <span class="tag">09/2026 — 06/2028</span>
+                </div>
+                <h3>Master's Degree — Digital Education</h3>
+                <p style="font-weight:600; color:var(--coral-dark); margin-bottom:6px;">Xi'an Jiaotong-Liverpool University</p>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-meta">
+                  <span class="tag">09/2019 — 06/2023</span>
+                </div>
+                <h3>Bachelor's Degree — Translation</h3>
+                <p style="font-weight:600; color:var(--coral-dark); margin-bottom:6px;">Harbin Normal University</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== Skills ===== -->
+          <div class="card reveal">
+            <h2 class="section-title" style="font-size:1.5rem; margin-bottom:20px;">🧰 Skills</h2>
+            <div class="skills-group">
+              <p class="skills-group-title">Languages</p>
+              <div class="skills-wrap">
+                <span class="chip">CET 6</span>
+                <span class="chip">TEM 4</span>
+                <span class="chip">Mandarin: Level 2 Grade A</span>
+              </div>
+            </div>
+            <div class="skills-group">
+              <p class="skills-group-title">Tools / Technologies</p>
+              <div class="skills-wrap">
+                <span class="chip">Bilingual Document Proofreading</span>
+                <span class="chip">Microsoft Office Suite (Word, Excel, PowerPoint)</span>
+              </div>
+            </div>
+            <div class="skills-group">
+              <p class="skills-group-title">Soft Skills &amp; Certificates</p>
+              <div class="skills-wrap">
+                <span class="chip">Senior High School English Teacher Qualification Certificate</span>
+                <span class="chip">Attention to Detail</span>
+                <span class="chip">Multi-Task Management</span>
+                <span class="chip">Teamwork</span>
+                <span class="chip">Audience-Oriented Content Adaptation</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="center resume-actions" style="margin-top:40px;">
+          <a href="resume.pdf" download="Beibei-Cong-Resume.pdf" class="btn btn-ghost">⬇ Download PDF</a>
+          <a href="contact.html" class="btn btn-primary" style="margin-left:10px;">Let's work together →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="funfact">
+          <div class="label">Fun fact about me</div>
+          <div class="text">
+            My first "website" was a fan page for a local bakery — built entirely in a single HTML file at age 13. 🥐
+          </div>
+        </div>
+        <nav class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="resume.html">Resume</a>
+          <a href="projects.html">Projects</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        © <span id="year"></span> Beibei Cong · Made with warmth &amp; coffee.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

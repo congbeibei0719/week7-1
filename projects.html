@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beibei Cong — Projects</title>
+  <meta name="description" content="A clean to-do list app by Beibei Cong — add tasks with dates, check them off, and stay organised." />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <!-- ===== Navbar ===== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-dot">B</span>
+        Beibei Cong
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="resume.html">Resume</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="contact.html" class="nav-cta">Contact Me</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Page header ===== -->
+    <section class="page-header">
+      <div class="container">
+        <span class="section-eyebrow">Things I've built</span>
+        <h1>Projects</h1>
+        <p>A to-do list app to stay organised, and a weather lookup to check conditions in any city.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="todo-app">
+          <div class="card reveal">
+            <h2 style="font-size:1.4rem; margin-bottom:20px;">📝 My To-Do List</h2>
+
+            <!-- Search box -->
+            <div class="todo-search-wrap">
+              <input type="text" id="todoSearch" placeholder="🔍 Search tasks…" autocomplete="off" />
+            </div>
+
+            <!-- Input row -->
+            <div class="todo-input-row">
+              <input type="text" id="todoText" placeholder="What do you need to do?" />
+              <input type="date" id="todoDate" />
+              <button class="todo-add" id="todoAdd">Add</button>
+            </div>
+
+            <!-- Priority selector -->
+            <div class="todo-emoji-row">
+              <span class="label">Priority:</span>
+              <div class="todo-priority" id="todoPriority">
+                <button type="button" data-priority="low" class="active">Low</button>
+                <button type="button" data-priority="medium">Medium</button>
+                <button type="button" data-priority="high">High</button>
+              </div>
+            </div>
+
+            <!-- Emoji picker -->
+            <div class="todo-emoji-row">
+              <span class="label">Tag:</span>
+              <button type="button" class="todo-emoji" data-emoji="">🚫</button>
+              <button type="button" class="todo-emoji" data-emoji="📌">📌</button>
+              <button type="button" class="todo-emoji" data-emoji="💡">💡</button>
+              <button type="button" class="todo-emoji" data-emoji="🔥">🔥</button>
+              <button type="button" class="todo-emoji" data-emoji="⭐">⭐</button>
+              <button type="button" class="todo-emoji" data-emoji="🎯">🎯</button>
+              <button type="button" class="todo-emoji" data-emoji="💬">💬</button>
+              <button type="button" class="todo-emoji" data-emoji="📚">📚</button>
+            </div>
+
+            <!-- Task list -->
+            <ul class="todo-list" id="todoList"></ul>
+
+            <!-- Empty state placeholder (shown when no tasks) -->
+            <div class="todo-empty" id="todoEmpty">
+              No tasks yet — add one above to get started! ✨
+            </div>
+
+            <!-- Stats -->
+            <div class="todo-stats" id="todoStats" style="display:none;">
+              <span id="todoCounter">0 of 0 tasks completed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Weather app ===== -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="weather-app">
+          <div class="card reveal">
+            <h2 style="font-size:1.4rem; margin-bottom:6px;">🌤️ Weather Lookup</h2>
+            <p style="color:var(--ink-soft); margin-bottom:18px; font-size:0.95rem;">
+              Enter a city name to see the current weather anywhere in the world.
+            </p>
+
+            <!-- City search -->
+            <div class="weather-input-row">
+              <input type="text" id="weatherCity" placeholder="e.g. Shanghai, London, Tokyo…" autocomplete="off" />
+              <button class="weather-search" id="weatherSearch" type="button">Search</button>
+            </div>
+
+            <!-- Error notice -->
+            <div class="weather-error" id="weatherError" hidden></div>
+
+            <!-- Loading status -->
+            <div class="weather-loading" id="weatherLoading" hidden>Loading…</div>
+
+            <!-- Hint (before first search) -->
+            <div class="weather-hint" id="weatherHint">Search for a city to get started. ✨</div>
+
+            <!-- Result -->
+            <div class="weather-result" id="weatherResult" hidden>
+              <div class="weather-location" id="weatherLocation">—</div>
+              <div class="weather-main">
+                <span class="weather-emoji" id="weatherEmoji">☀️</span>
+                <div class="weather-main-text">
+                  <div class="weather-temp"><span id="weatherTemp">--</span>°C</div>
+                  <div class="weather-desc" id="weatherDesc">—</div>
+                </div>
+              </div>
+              <div class="weather-details">
+                <div class="weather-detail">
+                  <span class="k">Humidity</span>
+                  <span class="v" id="weatherHumidity">--%</span>
+                </div>
+                <div class="weather-detail">
+                  <span class="k">Wind</span>
+                  <span class="v" id="weatherWind">—</span>
+                </div>
+                <div class="weather-detail">
+                  <span class="k">Updated</span>
+                  <span class="v" id="weatherUpdated">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== English Word Quiz ===== -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="english-app">
+          <div class="card reveal">
+            <h2 style="font-size:1.4rem; margin-bottom:6px;">📚 English Word Quiz</h2>
+            <p style="color:var(--ink-soft); margin-bottom:18px; font-size:0.95rem;">
+              Learn English words with a quick quiz — pick the correct meaning.
+            </p>
+
+            <div class="en-stage" id="enStage">
+              <!-- Start screen -->
+              <div class="en-start" id="enStart">
+                <div class="en-emoji">🌍</div>
+                <div class="en-title">Let's learning English</div>
+                <p class="en-subtitle">Tap Start to begin the vocabulary quiz.</p>
+                <button class="en-start-btn" id="enStartBtn" type="button">Start</button>
+              </div>
+
+              <!-- Quiz screen -->
+              <div class="en-quiz" id="enQuiz" hidden>
+                <div class="en-progress">
+                  <span id="enProgress">1 / 3</span>
+                  <span id="enScore">Score: 0</span>
+                </div>
+                <div class="en-image-wrap">
+                  <img class="en-image" id="enImage" src="1.jpg" alt="quiz image" />
+                  <button class="en-speak" id="enSpeak" type="button" title="Listen to pronunciation">🔊</button>
+                </div>
+                <div class="en-question">What is this?</div>
+                <div class="en-options" id="enOptions"></div>
+                <div class="en-feedback" id="enFeedback" hidden></div>
+              </div>
+
+              <!-- Result screen -->
+              <div class="en-result" id="enResult" hidden>
+                <div class="en-emoji">🎉</div>
+                <div class="en-title">Quiz Complete!</div>
+                <p class="en-subtitle">You got <strong id="enFinalScore">0</strong> out of <span id="enTotal">3</span> correct.</p>
+                <button class="en-start-btn" id="enRestart" type="button">Try Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="funfact">
+          <div class="label">Fun fact about me</div>
+          <div class="text">
+            Half of my side projects start as "wouldn't it be nice if…" notes scribbled on coffee napkins. ✏️
+          </div>
+        </div>
+        <nav class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="resume.html">Resume</a>
+          <a href="projects.html">Projects</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        © <span id="year"></span> Beibei Cong · Made with warmth &amp; coffee.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    (async function () {
+      var listEl = document.getElementById('todoList');
+      var emptyEl = document.getElementById('todoEmpty');
+      var statsEl = document.getElementById('todoStats');
+      var counterEl = document.getElementById('todoCounter');
+      var textInput = document.getElementById('todoText');
+      var dateInput = document.getElementById('todoDate');
+      var addBtn = document.getElementById('todoAdd');
+      var priorityWrap = document.getElementById('todoPriority');
+      var emojiButtons = document.querySelectorAll('.todo-emoji');
+      var searchInput = document.getElementById('todoSearch');
+
+      // Selected values for new tasks
+      var selectedPriority = 'low';
+      var selectedEmoji = '';
+      var searchQuery = '';
+
+      // Set today's date as default
+      dateInput.value = new Date().toISOString().split('T')[0];
+
+      // Priority selector
+      priorityWrap.querySelectorAll('button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          selectedPriority = btn.getAttribute('data-priority');
+          priorityWrap.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+        });
+      });
+
+      // Emoji picker
+      emojiButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var emoji = btn.getAttribute('data-emoji');
+          if (selectedEmoji === emoji) {
+            // Deselect if clicking the same one
+            selectedEmoji = '';
+            emojiButtons.forEach(function (b) { b.classList.remove('active'); });
+          } else {
+            selectedEmoji = emoji;
+            emojiButtons.forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+          }
+        });
+      });
+
+      // ===== Supabase client init =====
+      var SUPA_URL = 'https://cfbrctappkbbuxdntgnx.supabase.co';
+      var SUPA_KEY = 'sb_publishable_j3k7r6KHHJct-ra_pIcM5Q_lOaiDpLz';
+      var supa = null;
+      try {
+        if (!window.supabase || !window.supabase.createClient) {
+          throw new Error('Supabase library not loaded');
+        }
+        supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+      } catch (initErr) {
+        supa = null;
+        console.error('Supabase init failed:', initErr);
+      }
+
+      var tasks = [];
+      var loading = true;
+
+      // ===== Error / notice helpers =====
+      function showErrorNotice(message) {
+        var existing = document.getElementById('todoSupaError');
+        if (existing) existing.remove();
+        var notice = document.createElement('div');
+        notice.id = 'todoSupaError';
+        notice.style.cssText = 'border:2px solid #e53935;background:#fdecea;color:#b71c1c;padding:10px 12px;border-radius:8px;margin:10px 0;font-size:0.9rem;';
+        notice.textContent = message;
+        var card = listEl.closest('.card');
+        if (card) card.insertBefore(notice, listEl);
+      }
+      function clearErrorNotice() {
+        var existing = document.getElementById('todoSupaError');
+        if (existing) existing.remove();
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '';
+        var parts = dateStr.split('-');
+        var d = parts[2] + '/' + parts[1] + '/' + parts[0];
+        return d;
+      }
+
+      function doneCountAll() {
+        return tasks.filter(function (t) { return t.done; }).length;
+      }
+
+      // Map a Supabase row (task / is_complete columns) to the app's shape (text / done)
+      function normalize(row) {
+        return {
+          id: row.id,
+          text: row.task,
+          done: !!row.is_complete,
+          date: row.date || '',
+          priority: row.priority || 'low',
+          emoji: row.emoji || '',
+          created_at: row.created_at
+        };
+      }
+
+      function render() {
+        listEl.innerHTML = '';
+
+        if (loading) {
+          emptyEl.style.display = 'none';
+          statsEl.style.display = 'none';
+          var loadingMsg = document.createElement('div');
+          loadingMsg.className = 'todo-loading';
+          loadingMsg.style.cssText = 'padding:12px 4px;color:#666;font-style:italic;';
+          loadingMsg.textContent = 'Loading tasks…';
+          listEl.appendChild(loadingMsg);
+          return;
+        }
+
+        if (tasks.length === 0) {
+          emptyEl.style.display = 'block';
+          statsEl.style.display = 'none';
+          counterEl.textContent = '0 of 0 tasks completed';
+          return;
+        }
+        emptyEl.style.display = 'none';
+        statsEl.style.display = 'flex';
+
+        // Filter tasks by search query (local, no DB call)
+        var visible = tasks.filter(function (t) {
+          if (!searchQuery) return true;
+          var hay = (t.text + ' ' + (t.date || '') + ' ' + (t.priority || '') + ' ' + (t.emoji || '')).toLowerCase();
+          return hay.indexOf(searchQuery) !== -1;
+        });
+
+        if (visible.length === 0) {
+          var noMatch = document.createElement('div');
+          noMatch.className = 'todo-no-match';
+          noMatch.textContent = 'No tasks match "' + searchQuery + '" 🤔';
+          listEl.appendChild(noMatch);
+          counterEl.textContent = doneCountAll() + ' of ' + tasks.length + ' tasks completed';
+          return;
+        }
+
+        var doneCount = 0;
+        visible.forEach(function (t) {
+          if (t.done) doneCount++;
+          var li = document.createElement('li');
+          li.className = 'todo-item' + (t.done ? ' done' : '');
+
+          // Checkbox
+          var check = document.createElement('button');
+          check.className = 'todo-check';
+          check.setAttribute('aria-label', 'Mark task done');
+          check.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+          check.addEventListener('click', async function () {
+            if (!supa || !t.id) { render(); return; }
+            var newDone = !t.done;
+            try {
+              var res = await supa.from('todos').update({ is_complete: newDone }).eq('id', t.id);
+              if (res.error) throw res.error;
+              t.done = newDone;
+              render();
+            } catch (err) {
+              console.error('Toggle failed:', err);
+              showErrorNotice('Could not update task. See console for details.');
+              render();
+            }
+          });
+          li.appendChild(check);
+
+          // Text + date
+          var textWrap = document.createElement('div');
+          textWrap.className = 'todo-text';
+          var taskSpan = document.createElement('div');
+          taskSpan.className = 'task';
+          taskSpan.textContent = t.text;
+          taskSpan.setAttribute('title', 'Click to edit');
+          taskSpan.addEventListener('click', function (e) {
+            if (taskSpan.getAttribute('contenteditable') === 'true') return;
+            taskSpan.setAttribute('contenteditable', 'true');
+            taskSpan.focus();
+            // Select all text
+            var range = document.createRange();
+            range.selectNodeContents(taskSpan);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+          });
+          taskSpan.addEventListener('keydown', async function (e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              var newText = taskSpan.textContent.trim();
+              if (newText) {
+                if (supa && t.id && newText !== t.text) {
+                  try {
+                    var res = await supa.from('todos').update({ task: newText }).eq('id', t.id);
+                    if (res.error) throw res.error;
+                    t.text = newText;
+                  } catch (err) {
+                    console.error('Edit failed:', err);
+                    showErrorNotice('Could not save edit. See console for details.');
+                    taskSpan.textContent = t.text;
+                  }
+                } else if (newText !== t.text) {
+                  t.text = newText;
+                }
+              }
+              taskSpan.removeAttribute('contenteditable');
+              taskSpan.blur();
+              render();
+            } else if (e.key === 'Escape') {
+              e.preventDefault();
+              taskSpan.textContent = t.text;
+              taskSpan.removeAttribute('contenteditable');
+              taskSpan.blur();
+            }
+          });
+          taskSpan.addEventListener('blur', async function () {
+            if (taskSpan.getAttribute('contenteditable') === 'true') {
+              var newText = taskSpan.textContent.trim();
+              if (newText && newText !== t.text) {
+                if (supa && t.id) {
+                  try {
+                    var res = await supa.from('todos').update({ task: newText }).eq('id', t.id);
+                    if (res.error) throw res.error;
+                    t.text = newText;
+                  } catch (err) {
+                    console.error('Edit failed:', err);
+                    showErrorNotice('Could not save edit. See console for details.');
+                    taskSpan.textContent = t.text;
+                  }
+                } else {
+                  t.text = newText;
+                }
+              } else {
+                taskSpan.textContent = t.text;
+              }
+              taskSpan.removeAttribute('contenteditable');
+              render();
+            }
+          });
+          textWrap.appendChild(taskSpan);
+          if (t.date) {
+            var dateSpan = document.createElement('div');
+            dateSpan.className = 'date';
+            dateSpan.textContent = '📅 ' + formatDate(t.date);
+            textWrap.appendChild(dateSpan);
+          }
+
+          // Priority chip + emoji badge
+          var badges = document.createElement('div');
+          badges.className = 'todo-badges';
+          if (t.emoji) {
+            var emojiChip = document.createElement('span');
+            emojiChip.className = 'todo-emoji-chip';
+            emojiChip.textContent = t.emoji;
+            badges.appendChild(emojiChip);
+          }
+          if (t.priority) {
+            var priChip = document.createElement('span');
+            priChip.className = 'todo-priority-chip';
+            priChip.setAttribute('data-priority', t.priority);
+            priChip.textContent = t.priority;
+            badges.appendChild(priChip);
+          }
+          textWrap.appendChild(badges);
+          li.appendChild(textWrap);
+
+          // Delete button
+          var del = document.createElement('button');
+          del.className = 'todo-delete';
+          del.setAttribute('aria-label', 'Delete task');
+          del.innerHTML = '✕';
+          del.addEventListener('click', async function () {
+            if (!supa || !t.id) { render(); return; }
+            try {
+              var res = await supa.from('todos').delete().eq('id', t.id);
+              if (res.error) throw res.error;
+              tasks = tasks.filter(function (x) { return x.id !== t.id; });
+              render();
+            } catch (err) {
+              console.error('Delete failed:', err);
+              showErrorNotice('Could not delete task. See console for details.');
+              render();
+            }
+          });
+          li.appendChild(del);
+
+          listEl.appendChild(li);
+        });
+
+        counterEl.textContent = doneCountAll() + ' of ' + tasks.length + ' tasks completed';
+      }
+
+      async function addTask() {
+        var text = textInput.value.trim();
+        if (!text) {
+          textInput.focus();
+          return;
+        }
+        var dateValue = dateInput.value;
+        var payload = {
+          task: text,
+          date: dateValue ? dateValue : null,
+          is_complete: false,
+          priority: selectedPriority,
+          emoji: selectedEmoji
+        };
+        if (supa) {
+          try {
+            var res = await supa.from('todos').insert(payload).select();
+            if (res.error) throw res.error;
+            if (res.data && res.data.length) {
+              tasks.push(normalize(res.data[0]));
+            }
+          } catch (err) {
+            console.error('Add failed:', err);
+            showErrorNotice('Could not add task. See console for details.');
+          }
+        } else {
+          showErrorNotice('Not connected to Supabase. Cannot save tasks.');
+        }
+        textInput.value = '';
+        dateInput.value = new Date().toISOString().split('T')[0];
+        // Reset priority + emoji to defaults
+        selectedPriority = 'low';
+        selectedEmoji = '';
+        priorityWrap.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+        priorityWrap.querySelector('[data-priority="low"]').classList.add('active');
+        emojiButtons.forEach(function (b) { b.classList.remove('active'); });
+        render();
+      }
+
+      addBtn.addEventListener('click', addTask);
+      textInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') addTask();
+      });
+      searchInput.addEventListener('input', function () {
+        searchQuery = searchInput.value.trim().toLowerCase();
+        render();
+      });
+
+      // ===== Initial render (loading state) =====
+      render();
+
+      // ===== Load tasks from Supabase =====
+      if (!supa) {
+        loading = false;
+        showErrorNotice('Could not connect to Supabase. Check your table setup.');
+        render();
+        return;
+      }
+
+      try {
+        var result = await supa.from('todos').select('*').order('created_at', { ascending: true });
+        if (result.error) throw result.error;
+        tasks = (Array.isArray(result.data) ? result.data : []).map(normalize);
+        clearErrorNotice();
+      } catch (loadErr) {
+        console.error('Supabase load failed:', loadErr);
+        tasks = [];
+        showErrorNotice('Could not connect to Supabase. Check your table setup.');
+      }
+      loading = false;
+      render();
+    })();
+  </script>
+
+  <script>
+    /* ===== Weather app — weather API, single city lookup (?city=<name>, free, CORS enabled) ===== */
+    (function () {
+      var input = document.getElementById('weatherCity');
+      var btn = document.getElementById('weatherSearch');
+      var errorBox = document.getElementById('weatherError');
+      var loadingBox = document.getElementById('weatherLoading');
+      var hintBox = document.getElementById('weatherHint');
+      var resultBox = document.getElementById('weatherResult');
+      var locationEl = document.getElementById('weatherLocation');
+      var emojiEl = document.getElementById('weatherEmoji');
+      var tempEl = document.getElementById('weatherTemp');
+      var descEl = document.getElementById('weatherDesc');
+      var humidityEl = document.getElementById('weatherHumidity');
+      var windEl = document.getElementById('weatherWind');
+      var updatedEl = document.getElementById('weatherUpdated');
+
+      var API_URL = 'https://uapis.cn/api/v1/misc/weather';
+
+      // QWeather-style icon codes from the JSON -> English condition label + emoji
+      function describe(code) {
+        code = Number(code);
+        if (code === 100) return ['Clear', '☀️'];
+        if (code === 150) return ['Clear', '🌙'];
+        if (code === 101 || code === 151) return ['Cloudy', '⛅'];
+        if (code === 102 || code === 103 || code === 152 || code === 153) return ['Partly cloudy', '🌤️'];
+        if (code === 104 || code === 154) return ['Overcast', '☁️'];
+        if (code === 302 || code === 303 || code === 304) return ['Thunderstorm', '⛈️'];
+        if (code === 300 || code === 350) return ['Light showers', '🌦️'];
+        if (code === 301 || code === 351) return ['Heavy showers', '🌧️'];
+        if (code === 305) return ['Light rain', '🌦️'];
+        if (code === 306) return ['Moderate rain', '🌧️'];
+        if (code === 307 || code === 308 || code === 310 || code === 311 || code === 312) return ['Heavy rain', '🌧️'];
+        if (code === 309) return ['Drizzle', '🌦️'];
+        if (code === 313) return ['Freezing rain', '🌧️'];
+        if (code >= 300 && code < 400) return ['Rain', '🌧️'];
+        if (code === 404 || code === 405) return ['Sleet', '🌨️'];
+        if (code === 400) return ['Light snow', '🌨️'];
+        if (code === 401) return ['Snow', '❄️'];
+        if (code === 402 || code === 403) return ['Heavy snow', '❄️'];
+        if (code === 406 || code === 407 || code === 456 || code === 457) return ['Snow showers', '🌨️'];
+        if (code >= 400 && code < 500) return ['Snow', '❄️'];
+        if (code === 502 || code === 511 || code === 512) return ['Haze', '😷'];
+        if (code === 503 || code === 504 || code === 507 || code === 508) return ['Dust / sandstorm', '🌪️'];
+        if (code >= 500 && code < 600) return ['Fog', '🌫️'];
+        if (code === 900) return ['Hot', '🥵'];
+        if (code === 901) return ['Cold', '🥶'];
+        return null;
+      }
+
+      // Chinese wind direction -> English abbreviation; "3级" -> "Force 3"
+      var WIND_DIR = {
+        '微风': 'Light breeze', '无风': 'Calm',
+        '北风': 'N', '东北风': 'NE', '东风': 'E', '东南风': 'SE',
+        '南风': 'S', '西南风': 'SW', '西风': 'W', '西北风': 'NW'
+      };
+      function formatWind(direction, power) {
+        var dir = WIND_DIR[direction] || direction || '';
+        var p = String(power || '').replace(/(\d+)\s*级/, 'Force $1').trim();
+        return [dir, p].filter(Boolean).join(' · ') || '—';
+      }
+
+      // "6 分钟前发布" -> "6 min ago"; "2026-10-16 09:30" -> "09:30"; "刚刚发布" -> "Just now"
+      function formatUpdated(raw) {
+        if (!raw) return '—';
+        var min = raw.match(/(\d+)\s*分钟前/);
+        if (min) return min[1] + ' min ago';
+        var hour = raw.match(/(\d+)\s*小时前/);
+        if (hour) return hour[1] + ' h ago';
+        if (/刚刚/.test(raw)) return 'Just now';
+        var stamp = raw.match(/\d{4}-\d{2}-\d{2}[ T](\d{2}:\d{2})/);
+        if (stamp) return stamp[1];
+        return raw.replace('发布', '').trim();
+      }
+
+      // City name from the JSON; append province only when it adds distinct info
+      function formatLocation(data, fallback) {
+        var city = data.city || fallback;
+        var province = data.province;
+        if (province && province !== city && province.indexOf(city) === -1 && city.indexOf(province) === -1) {
+          return city + ', ' + province;
+        }
+        return city;
+      }
+
+      function showError(message) {
+        loadingBox.hidden = true;
+        hintBox.hidden = true;
+        resultBox.hidden = true;
+        errorBox.textContent = message;
+        errorBox.hidden = false;
+      }
+
+      function setLoading(isLoading) {
+        btn.disabled = isLoading;
+        input.disabled = isLoading;
+        if (isLoading) {
+          errorBox.hidden = true;
+          hintBox.hidden = true;
+          resultBox.hidden = true;
+          loadingBox.hidden = false;
+        } else {
+          loadingBox.hidden = true;
+        }
+      }
+
+      function renderResult(query, data) {
+        locationEl.textContent = '📍 ' + formatLocation(data, query);
+        tempEl.textContent = Math.round(Number(data.temperature));
+
+        var info = describe(data.weather_icon);
+        if (info) {
+          descEl.textContent = info[0];
+          emojiEl.textContent = info[1];
+        } else {
+          descEl.textContent = data.weather || 'Unknown conditions';
+          emojiEl.textContent = '🌡️';
+        }
+
+        humidityEl.textContent = (data.humidity != null ? data.humidity : '--') + '%';
+        windEl.textContent = formatWind(data.wind_direction, data.wind_power);
+        updatedEl.textContent = formatUpdated(data.report_time);
+
+        errorBox.hidden = true;
+        hintBox.hidden = true;
+        loadingBox.hidden = true;
+        resultBox.hidden = false;
+      }
+
+      async function search() {
+        var query = input.value.trim();
+        if (!query) {
+          showError('Enter a city first.');
+          return;
+        }
+        setLoading(true);
+        try {
+          var res = await fetch(API_URL + '?city=' + encodeURIComponent(query));
+          if (res.status === 404) {
+            showError("Couldn't find that city — check the spelling.");
+            return;
+          }
+          if (!res.ok) throw new Error('Weather request failed (' + res.status + ')');
+          var data = await res.json();
+          if (data.error === 'LOCATION_NOT_FOUND' || data.temperature == null) {
+            showError("Couldn't find that city — check the spelling.");
+            return;
+          }
+          renderResult(query, data);
+        } catch (err) {
+          console.error('Weather lookup failed:', err);
+          showError("Couldn't load the weather right now — please try again.");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      btn.addEventListener('click', search);
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') search();
+      });
+    })();
+  </script>
+
+  <script>
+    /* ===== English Word Quiz — image to word (vanilla JS, no frameworks) ===== */
+    (function () {
+      // Each question: a local image + the correct English word + 3 distractors
+      var QUESTIONS = [
+        { image: '1.jpg', answer: 'apple', options: ['apple', 'banana', 'pear', 'grape'] },
+        { image: '2.jpg', answer: 'dog',   options: ['dog', 'cat', 'mouse', 'bird'] },
+        { image: '3.jpg', answer: 'eye',   options: ['eye', 'hand', 'foot', 'nose'] }
+      ];
+
+      var startScreen = document.getElementById('enStart');
+      var quizScreen = document.getElementById('enQuiz');
+      var resultScreen = document.getElementById('enResult');
+      var startBtn = document.getElementById('enStartBtn');
+      var restartBtn = document.getElementById('enRestart');
+      var speakBtn = document.getElementById('enSpeak');
+      var imageEl = document.getElementById('enImage');
+      var optionsEl = document.getElementById('enOptions');
+      var feedbackEl = document.getElementById('enFeedback');
+      var progressEl = document.getElementById('enProgress');
+      var scoreEl = document.getElementById('enScore');
+      var finalScoreEl = document.getElementById('enFinalScore');
+      var totalEl = document.getElementById('enTotal');
+
+      var quiz = [];
+      var index = 0;
+      var score = 0;
+      var answered = false;
+
+      function shuffle(arr) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+        }
+        return a;
+      }
+
+      function speak(word) {
+        try {
+          if (!('speechSynthesis' in window)) return;
+          window.speechSynthesis.cancel();
+          var u = new SpeechSynthesisUtterance(word);
+          u.lang = 'en-US';
+          u.rate = 0.85;
+          window.speechSynthesis.speak(u);
+        } catch (e) { /* TTS not available */ }
+      }
+
+      function show(screen) {
+        startScreen.hidden = screen !== 'start';
+        quizScreen.hidden = screen !== 'quiz';
+        resultScreen.hidden = screen !== 'result';
+      }
+
+      function start() {
+        quiz = shuffle(QUESTIONS);
+        index = 0;
+        score = 0;
+        totalEl.textContent = quiz.length;
+        show('quiz');
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        answered = false;
+        var q = quiz[index];
+        imageEl.src = q.image;
+        imageEl.alt = q.answer;
+        progressEl.textContent = (index + 1) + ' / ' + quiz.length;
+        scoreEl.textContent = 'Score: ' + score;
+
+        // Shuffle the four answer words each round
+        var options = shuffle(q.options);
+        optionsEl.innerHTML = '';
+        options.forEach(function (opt) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'en-option';
+          btn.textContent = opt;
+          btn.addEventListener('click', function () { choose(btn, opt, q.answer); });
+          optionsEl.appendChild(btn);
+        });
+
+        feedbackEl.hidden = true;
+        feedbackEl.className = 'en-feedback';
+      }
+
+      function choose(btn, picked, correct) {
+        if (picked === correct) {
+          // Correct: green checkmark, lock all options, celebrate, then proceed
+          score++;
+          btn.classList.add('correct');
+          btn.textContent = picked + ' ✓';
+          var buttons = optionsEl.querySelectorAll('.en-option');
+          buttons.forEach(function (b) { b.disabled = true; });
+          feedbackEl.textContent = 'Great job! 🎉';
+          feedbackEl.className = 'en-feedback ok';
+          feedbackEl.hidden = false;
+          scoreEl.textContent = 'Score: ' + score;
+          speak(correct);
+          setTimeout(next, 1200);
+        } else {
+          // Wrong: red cross, disable just this button, let the child try again
+          btn.classList.add('wrong');
+          btn.textContent = picked + ' ✗';
+          btn.disabled = true;
+          feedbackEl.textContent = 'Try again! 💪';
+          feedbackEl.className = 'en-feedback no';
+          feedbackEl.hidden = false;
+        }
+      }
+
+      function next() {
+        index++;
+        if (index >= quiz.length) {
+          finalScoreEl.textContent = score;
+          show('result');
+        } else {
+          renderQuestion();
+        }
+      }
+
+      startBtn.addEventListener('click', start);
+      restartBtn.addEventListener('click', start);
+      speakBtn.addEventListener('click', function () { speak(quiz[index].answer); });
+    })();
+  </script>
+</body>
+</html>

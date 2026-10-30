@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beibei Cong — Home</title>
+  <meta name="description" content="Beibei Cong — digital education postgraduate exploring the intersection of AI and language learning, researching educational technology and designing learner-centred experiences." />
+  <link rel="stylesheet" href="styles.css?v=2" />
+</head>
+<body>
+  <!-- ===== Navbar ===== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-dot">B</span>
+        Beibei Cong
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="active">Home</a>
+        <a href="resume.html">Resume</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html" class="nav-cta">Contact Me</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="headshot-wrap reveal">
+          <img class="headshot"
+            src="assets/profile.jpg"
+            alt="Headshot of Beibei Cong" />
+          <span class="headshot-badge">Nice to meet you!</span>
+        </div>
+        <div class="reveal">
+          <span class="hero-eyebrow"><span class="pulse"></span> Hello there, welcome in</span>
+          <h1>Hi, I'm <span class="accent">Beibei Cong</span> 👋</h1>
+          <p class="hero-lead">
+            Hi there! I'm a digital education postgraduate. I explore the
+            intersection of AI and language learning, particularly how digital
+            tools facilitate learners' development. I enjoy researching
+            educational technology and designing learner-centred learning
+            experiences.
+          </p>
+          <div class="hero-actions">
+            <a href="projects.html" class="btn btn-primary">See my work →</a>
+            <a href="contact.html" class="btn btn-ghost">Say hello</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Three things I like ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="center">
+          <span class="section-eyebrow">A few favourites</span>
+          <h2 class="section-title">Three things I love</h2>
+          <p class="section-subtitle">
+            A few passions that shape who I am and keep my curiosity alive
+            outside of my research.
+          </p>
+        </div>
+        <div class="grid grid-3">
+          <article class="card like-card reveal">
+            <div class="like-icon">✈️</div>
+            <h3>Travelling &amp; exploring new places</h3>
+            <p>I love travelling to different destinations, soaking up local cultures, landscapes and everyday life. It always brings me fresh inspiration.</p>
+          </article>
+          <article class="card like-card reveal">
+            <div class="like-icon">📖</div>
+            <h3>Reading diverse books</h3>
+            <p>I enjoy reading across genres, from academic writings to fiction and essays. Reading lets me step into other worlds and perspectives.</p>
+          </article>
+          <article class="card like-card reveal">
+            <div class="like-icon">🎬</div>
+            <h3>Watching meaningful films</h3>
+            <p>I'm fond of watching movies. I appreciate well-told stories that reflect human emotions and spark thoughtful reflections.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Favorite songs ===== -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="center">
+          <span class="section-eyebrow">On repeat</span>
+          <h2 class="section-title section-title-lg">Three of my favorite songs</h2>
+          <p class="section-subtitle">
+            A little playlist of tunes I keep coming back to — perfect for
+            coding sessions, walks, and quiet mornings.
+          </p>
+        </div>
+        <div class="card reveal" style="max-width:560px; margin:0 auto;">
+          <ul style="list-style:none; text-align:left; display:grid; gap:16px;">
+            <li style="display:flex; align-items:center; gap:14px;">
+              <span style="font-size:1.6rem;">🎵</span>
+              <div>
+                <div style="font-family:'Poppins',sans-serif; font-weight:700; color:var(--ink);">Dreams</div>
+                <div style="color:var(--ink-soft); font-size:0.92rem;">Fleetwood Mac</div>
+              </div>
+            </li>
+            <li style="display:flex; align-items:center; gap:14px;">
+              <span style="font-size:1.6rem;">🎶</span>
+              <div>
+                <div style="font-family:'Poppins',sans-serif; font-weight:700; color:var(--ink);">Put Your Records On</div>
+                <div style="color:var(--ink-soft); font-size:0.92rem;">Corinne Bailey Rae</div>
+              </div>
+            </li>
+            <li style="display:flex; align-items:center; gap:14px;">
+              <span style="font-size:1.6rem;">🎧</span>
+              <div>
+                <div style="font-family:'Poppins',sans-serif; font-weight:700; color:var(--ink);">Sunflower</div>
+                <div style="color:var(--ink-soft); font-size:0.92rem;">Post Malone &amp; Swae Lee</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer with fun fact ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="funfact">
+          <div class="label">Fun fact about me</div>
+          <div class="text">
+            I once learned to say "hello" in 12 different languages just to
+            surprise people at meetups. 🌍
+          </div>
+        </div>
+        <nav class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="resume.html">Resume</a>
+          <a href="projects.html">Projects</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        © <span id="year"></span> Beibei Cong · Made with warmth &amp; coffee.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
